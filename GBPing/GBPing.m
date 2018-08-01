@@ -638,16 +638,20 @@ static NSTimeInterval const kDefaultTimeout =           2.0;
             self.hostAddress = nil;
             
             //clean up pendingpings
-            [self.pendingPings removeAllObjects];
-            self.pendingPings = nil;
+            if (self.pendingPings != nil && ![self.pendingPings isEqual:[NSNull null]]) {
+                [self.pendingPings removeAllObjects];
+                self.pendingPings = nil;
+            }
             for (NSNumber *key in [self.timeoutTimers copy]) {
                 NSTimer *timer = self.timeoutTimers[key];
                 [timer invalidate];
             }
             
             //clean up timeouttimers
-            [self.timeoutTimers removeAllObjects];
-            self.timeoutTimers = nil;
+            if (self.timeoutTimers != nil && ![self.timeoutTimers isEqual:[NSNull null]]) {
+                [self.timeoutTimers removeAllObjects];
+                self.timeoutTimers = nil;
+            }
             
             //reset seq number
             self.nextSequenceNumber = 0;
